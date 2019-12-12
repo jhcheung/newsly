@@ -10,6 +10,8 @@ class App extends React.Component {
 
   state = {
     articles: articles,
+    listOrCard: "Card",
+    lightOrDark: "Light"
   }
 
   renderArticles = () => {
@@ -20,16 +22,30 @@ class App extends React.Component {
               url={article.url}
               urlToImage={article.urlToImage}
               description={article.description}
+              lightOrDark={this.state.lightOrDark.toLowerCase()}
               />
     })
   }
 
+  handleListClick = () =>{
+    this.setState({
+      listOrCard: (this.state.listOrCard === "Card") ? "List" : "Card"
+    })
+  }
+
+  handleLightClick = () =>{
+    this.setState({
+      lightOrDark: (this.state.lightOrDark === "Light") ? "Dark" : "Light"
+    })
+  }
+
   render(){
+    // console.log(this.state.listOrCard.toLowerCase())
     return (
-      <div className="light">
-        <button>Switch to Dark Mode</button>
-        <button>Switch to List View</button>
-        <div className="cards">
+      <div className={this.state.lightOrDark.toLowerCase()}>
+        <button onClick={this.handleLightClick}>Switch to {this.state.lightOrDark === "Light" ? "Dark" : "Light"} Mode</button>
+        <button onClick={this.handleListClick}>Switch to {this.state.listOrCard === "Card" ? "List" : "Card"} View</button>
+        <div className={`${this.state.listOrCard.toLowerCase()}s`}>
           {this.renderArticles()}
         </div>
       </div>
